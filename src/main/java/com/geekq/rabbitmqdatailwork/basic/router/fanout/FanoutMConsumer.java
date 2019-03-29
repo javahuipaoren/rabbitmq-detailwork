@@ -1,4 +1,4 @@
-package com.geekq.rabbitmqdatailwork.basic.ack;
+package com.geekq.rabbitmqdatailwork.basic.router.fanout;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -12,9 +12,9 @@ import java.io.IOException;
 /**
  * @author 邱润泽 bullock
  */
-public class GMConsumer extends DefaultConsumer {
+public class FanoutMConsumer extends DefaultConsumer {
 
-    private static final Logger logger = LoggerFactory.getLogger(GMConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(FanoutMConsumer.class);
 
     private Channel channel ;
     /**
@@ -22,7 +22,7 @@ public class GMConsumer extends DefaultConsumer {
      *
      * @param channel the channel to which this consumer is attached
      */
-    public GMConsumer(Channel channel) {
+    public FanoutMConsumer(Channel channel) {
         super(channel);
         this.channel = channel ;
     }
@@ -48,15 +48,6 @@ public class GMConsumer extends DefaultConsumer {
         logger.info("envelope :{}",envelope);
         logger.info("properties :{}",properties);
         logger.info("body :{}",new String(body));
-
-        /**
-         * 是否重新放回队列
-         */
-        if((Integer)properties.getHeaders().get("num") == 2){
-            channel.basicNack(envelope.getDeliveryTag(),false,true);
-        }else{
-            channel.basicAck(envelope.getDeliveryTag(),false);
-        }
-
+        channel.basicAck(envelope.getDeliveryTag(),false);
     }
 }
