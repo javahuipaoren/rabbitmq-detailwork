@@ -35,7 +35,7 @@ public class TopicConsumer {
 		
         //durable 是否持久化消息
         QueueingConsumer consumer = new QueueingConsumer(channel);
-        //参数：队列名称、是否自动ACK、Consumer
+        //参数：队列名称、是否自动ACK、QosConsumer
         channel.basicConsume(queueName, true, consumer);  
         //循环获取消息  
         while(true){  
