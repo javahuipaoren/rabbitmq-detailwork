@@ -19,7 +19,7 @@
     delete from t_order
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.geekq.rabbitmqreliable.entity.Order" >
+  <insert id="insert" parameterType="com.geekq.rabbitmqreliable.entity.Order" useGeneratedKeys="true" keyProperty="id">
     insert into t_order (id, name, message_id
       )
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{messageId,jdbcType=VARCHAR}

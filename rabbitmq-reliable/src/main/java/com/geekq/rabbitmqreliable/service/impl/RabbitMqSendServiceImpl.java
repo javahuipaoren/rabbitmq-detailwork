@@ -14,13 +14,18 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author 邱润泽 bullock
  */
+@Service
 public class RabbitMqSendServiceImpl implements RabbitMqSendService {
 
     private static final Logger log = LoggerFactory.getLogger(RabbitMqSendServiceImpl.class);
@@ -83,10 +88,14 @@ public class RabbitMqSendServiceImpl implements RabbitMqSendService {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         rabbitTemplate.setReturnCallback(returnCallback);
 
+        Map<String, Object> properties =new HashMap<>();
+        MessageHeaders mhs = new MessageHeaders(properties);
+        org.springframework.messaging.Message msg = MessageBuilder.createMessage(messageLog,mhs);
+
         /**
          * 发送订单消息
          */
         CorrelationData correlationData = new CorrelationData(messageLog.getMessageId());
-        rabbitTemplate.convertAndSend(exchangeName,rkey,messageLog,correlationData);
+        rabbitTemplate.convertAndSend(exchangeName,rkey,msg,correlationData);
     }
 }

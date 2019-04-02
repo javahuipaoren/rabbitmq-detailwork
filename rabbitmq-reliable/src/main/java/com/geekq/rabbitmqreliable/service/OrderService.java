@@ -7,5 +7,5 @@ import com.geekq.rabbitmqreliable.entity.Order;
  */
 public interface OrderService {
 
-    public void createOrder(Order order);
+    public void createOrder(String orderName);
 }
