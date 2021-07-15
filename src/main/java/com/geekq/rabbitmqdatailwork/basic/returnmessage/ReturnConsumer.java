@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.returnmessage;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -13,17 +15,12 @@ public class ReturnConsumer {
     public static void main(String[] args) throws Exception {
 
 
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setPassword("mqadmin");
-        factory.setUsername("mqadmin");
-        factory.setHost("39.107.245.253");
-        factory.setVirtualHost("/");
-        factory.setPort(5672);
+        ConnectionFactory factory = MqUtil.getConnectionFactory();
 
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        String exchangeName = "return_00001";
+        String exchangeName = Constants.RETURN_EXCHANGE_NAME;
         String routingKey = "return.#";
         String queueName = "return_queue_0001";
 

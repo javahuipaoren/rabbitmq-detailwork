@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.limitmessage;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmListener;
 import com.rabbitmq.client.Connection;
@@ -16,17 +18,12 @@ public class QosProducer {
 		 *  建立连接通道
 		 *  在非自动确认的模式下，可以采用限流模式，rabbitmq 提供了服务质量保障qos机制来控制一次消费消息数量。
 		 */
-		ConnectionFactory connectionFactory = new ConnectionFactory();
-		connectionFactory.setHost("39.107.245.253");
-		connectionFactory.setPort(5672);
-		connectionFactory.setVirtualHost("/");
-		connectionFactory.setUsername("mqadmin");
-		connectionFactory.setPassword("mqadmin");
+		ConnectionFactory connectionFactory = MqUtil.getConnectionFactory();
 
 
 		Connection connection = connectionFactory.newConnection();
 		Channel channel = connection.createChannel();
-		String exchange = "qos_exchange_0001";
+		String exchange = Constants.QS_EXCHANGE_NAME;
 		String routingKey = "qos.save_0001";
 		
 		String msg = "Hello RabbitMQ QOS Message";

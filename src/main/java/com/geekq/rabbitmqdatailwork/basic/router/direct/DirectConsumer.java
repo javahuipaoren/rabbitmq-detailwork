@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.router.direct;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -16,20 +18,10 @@ public class DirectConsumer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
-        /**
-         *  建立连接通道
-         */
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("39.107.245.253");
-        connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost("/");
-        connectionFactory.setUsername("mqadmin");
-        connectionFactory.setPassword("mqadmin");
-
-
+        ConnectionFactory connectionFactory = MqUtil.getConnectionFactory();
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
-        String exchangeName = "direct_0006";
+        String exchangeName = Constants.DIRECT_EXCHANGE_NAME;
         String queueName = "direct_0";
         String routingKey = "direct.p";
 

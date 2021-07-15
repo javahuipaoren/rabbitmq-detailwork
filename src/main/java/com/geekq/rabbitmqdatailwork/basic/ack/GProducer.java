@@ -1,5 +1,6 @@
 package com.geekq.rabbitmqdatailwork.basic.ack;
 
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -20,14 +21,7 @@ public class GProducer {
         /**
          *  建立连接通道
          */
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("39.107.245.253");
-        connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost("/");
-        connectionFactory.setUsername("mqadmin");
-        connectionFactory.setPassword("mqadmin");
-
-
+        ConnectionFactory connectionFactory = MqUtil.getConnectionFactory();
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         String exchange = "test_ack_exchange";

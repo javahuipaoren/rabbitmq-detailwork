@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.deadmessage;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -10,16 +12,11 @@ public class DeadProducer {
 	
 	public static void main(String[] args) throws Exception {
 		
-		ConnectionFactory factory = new ConnectionFactory();
-		factory.setHost("39.107.245.253");
-		factory.setPort(5672);
-		factory.setVirtualHost("/");
-		factory.setUsername("mqadmin");
-		factory.setPassword("mqadmin");
+		ConnectionFactory factory = MqUtil.getConnectionFactory();
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 		
-		String exchange = "dlx_exchange_0002";
+		String exchange = Constants.DLX_EXCHANGE_NAME;
 		String routingKey = "dlx.save";
 		
 		String msg = "Hello RabbitMQ DLX Message";

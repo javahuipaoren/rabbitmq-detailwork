@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.router.fanout;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -16,21 +18,11 @@ public class FanoutConsumer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
-        /**
-         *  建立连接通道
-         */
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("39.107.245.253");
-        connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost("/");
-        connectionFactory.setUsername("mqadmin");
-        connectionFactory.setPassword("mqadmin");
-
-
+        ConnectionFactory connectionFactory = MqUtil.getConnectionFactory();
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         String queueName = "fanouttest00001";
-        String exchangeName = "fanout.test00002";
+        String exchangeName = Constants.FANOUT_EXCHANGE_NAME;
 
         channel.exchangeDeclare(exchangeName, "fanout", true, false, null);
         channel.queueDeclare(queueName, true, false, false, null);

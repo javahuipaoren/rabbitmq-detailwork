@@ -1,5 +1,6 @@
 package com.geekq.rabbitmqdatailwork.basic.deadmessage;
 
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -13,12 +14,7 @@ public class DeadConsumer {
 	public static void main(String[] args) throws Exception {
 
 
-		ConnectionFactory factory = new ConnectionFactory();
-		factory.setHost("39.107.245.253");
-		factory.setPort(5672);
-		factory.setVirtualHost("/");
-		factory.setUsername("mqadmin");
-		factory.setPassword("mqadmin");
+		ConnectionFactory factory = MqUtil.getConnectionFactory();
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 		

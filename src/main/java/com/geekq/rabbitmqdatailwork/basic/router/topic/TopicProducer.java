@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.router.topic;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -10,20 +12,13 @@ public class TopicProducer {
 	public static void main(String[] args) throws Exception {
 		
 		//1 创建ConnectionFactory
-		ConnectionFactory connectionFactory = new ConnectionFactory();
-		connectionFactory.setHost("39.107.245.253");
-		connectionFactory.setPort(5672);
-		connectionFactory.setVirtualHost("/");
-		connectionFactory.setUsername("mqadmin");
-		connectionFactory.setPassword("mqadmin");
-
-
+		ConnectionFactory connectionFactory = MqUtil.getConnectionFactory();
 		//2 创建Connection
 		Connection connection = connectionFactory.newConnection();
 		//3 创建Channel
 		Channel channel = connection.createChannel();  
 		//4 声明
-		String exchangeName = "test_topic_exchange";
+		String exchangeName = Constants.TOPIC_EXCHANGE_NAME;
 		String routingKey1 = "user.save";
 		String routingKey2 = "user.update";
 		String routingKey3 = "user.delete.abc";

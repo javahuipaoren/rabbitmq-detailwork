@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.returnmessage;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
@@ -11,17 +13,11 @@ import java.util.concurrent.TimeoutException;
 public class ReturnProducer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setPassword("mqadmin");
-        factory.setUsername("mqadmin");
-        factory.setHost("39.107.245.253");
-        factory.setVirtualHost("/");
-        factory.setPort(5672);
-
+        ConnectionFactory factory = MqUtil.getConnectionFactory();
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        String exchangeName   = "return_00001" ;
+        String exchangeName   = Constants.RETURN_EXCHANGE_NAME ;
         String rkey = "return.save";
         String routingKeyError = "abc.save";
 

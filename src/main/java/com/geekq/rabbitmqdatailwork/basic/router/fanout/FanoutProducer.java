@@ -1,5 +1,7 @@
 package com.geekq.rabbitmqdatailwork.basic.router.fanout;
 
+import com.geekq.rabbitmqdatailwork.basic.common.Constants;
+import com.geekq.rabbitmqdatailwork.basic.util.MqUtil;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -17,27 +19,15 @@ public class FanoutProducer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("39.107.245.253");
-        connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost("/");
-        connectionFactory.setUsername("mqadmin");
-        connectionFactory.setPassword("mqadmin");
-
-        /**
-         * 设置自动连接恢复
-         */
+        ConnectionFactory connectionFactory = MqUtil.getConnectionFactory();
+        // 设置自动连接恢复
         connectionFactory.setAutomaticRecoveryEnabled(true);
-
-        /**
-         * 重试时间
-         */
         connectionFactory.setNetworkRecoveryInterval(3000);
+        // 重试时间
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
 
-
-        String exchangeName = "fanout.test00002";
+        String exchangeName = Constants.FANOUT_EXCHANGE_NAME;
 
         for (int i = 0; i < 5 ; i++) {
             Map<String,Object> header = new HashMap<>();
